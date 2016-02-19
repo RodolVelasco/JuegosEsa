@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: juegos_esa
+    database_user: rodolvelasco
+    database_password:
+    mailer_transport: 
+    mailer_host: 
+    mailer_user: null
+    mailer_password: null
+    locale: es
+    secret: 6cb3dfcebcf496d69c71713709889121
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true

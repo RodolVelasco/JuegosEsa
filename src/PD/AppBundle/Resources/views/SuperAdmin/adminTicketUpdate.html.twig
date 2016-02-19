@@ -1,0 +1,320 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+<style type="text/css">
+    
+.table-borderless td,
+.table-borderless th {
+    border: 1 !important;
+    border-right-width: 0px  !important;
+    border-left-width: 0px  !important;
+}
+
+</style>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- <script type="text/javascript" src="{{ asset('javascript/jquery-2.0.3.js') }}"></script> -->
+
+    <!-- jquery ui -->
+    <!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script> -->
+    
+    <!-- <script type="text/javascript" src="{{ asset('bundles/dacicontratos/js/set_table_controlpago.js') }}"></script> -->
+    <!-- <script type="text/javascript" src="{{ asset('bundles/dacicontratos/js/jquery.numberformatter-1.2.4.js') }}"></script> -->
+    
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Información de libreta</h1>
+
+<div class="table-responsive">
+<table class="table table-borderless table-bordered table-condensed">
+    <tbody>
+        <tr>
+            <td class="col-md-3"><h4>Juego</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.caja.juego.nombre }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Caja</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.caja.numeroCarton }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Correlativo</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.correlativo }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Vendedor</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.vendedor }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Precio al vendedor</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.precioAlVendedor }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Precio acumulado</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.precioAcumulado }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Premio acumulado</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.premioAcumulado }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Raspable gratis acumulado</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.raspableGratisAcumulado }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Fecha asignada al vendedor</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td><h4><small>{{ libreta.fechaAsignacionVendedor|date('Y-m-d') }}</small></h4></td>
+        </tr>
+        <tr>
+            <td class="col-md-3"><h4>Fecha estado final</h4></td>
+            <!-- <td>&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
+            <td>
+                {% if libreta.fechaEstadoFinal is null %}
+                    <h4><small>No finalizado</small></h4>
+                {% else %}
+                    <h4><small>{{ libreta.fechaEstadoFinal|date('Y-m-d') }}</small></h4>
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<h1 class="page-header"><small>Tickets</small></h1>
+{{ form_start(formulario, {'attr': {'id': 'formTicket'}}) }}
+<table class="table table-hover table-bordered" id="tick" data-prototype="{{ form_widget(formulario.tickets.vars.prototype)|e }}">
+    <thead>
+      <tr class="active">
+         <th class="active">Número ticket</th>
+         <!-- {# <th class="active">No. Aleatorio</th> #} -->
+         <th class="active">Fecha recibido</th>
+         <th class="active">Estado</th>
+         <th class="active">Premio</th>
+         <th class="active"><div align="left">Acción</div></th>
+      </tr>
+    </thead>
+    {% for tick in formulario.tickets %}
+        <tr>
+            <td><div align="left">{{ form_widget(tick.numeroTicket) }}</div></td>
+            <!-- {# <td><div align="left">{{ form_widget(tick.numeroAleatorio) }}</div></td> #} -->
+            <td><div align="left" id="fechaRecibido" class="fechaRec">{{ form_widget(tick.fechaRecibido, {'type':'text'}) }}</div></td>
+            {# <td><div align="left">{{ form_widget(tick.premio, {'value': tick.premio.vars.value|replace({',': '.'})}) }}</div></td> #}
+
+            <!-- 
+            {# <td><div align="left">{{ form_widget(tick.premio, {'value': tick.premio.vars.value|number_format(2, '.', ',')}) }}</div></td> #}
+            {# <td><div align="left">{{ form_widget(tick.premio, {'value': "%.2f"|format(tick.premio.vars.value)}) }}</div></td> #}
+            -->
+            <td><div align="left">{{ form_widget(tick.estado) }}</div></td>
+            <td><div align="left">{{ form_widget(tick.premio) }}</div></td>
+        </tr>
+    {% endfor %}
+</table><br/>
+<div align="center">
+    {{ form_widget(formulario.guardar_tickets_y_regresar) }}&nbsp;&nbsp;&nbsp;&nbsp;
+    {{ form_widget(formulario.guardar_tickets) }}&nbsp;&nbsp;&nbsp;&nbsp;
+    {{ form_widget(formulario.no_guardar_tickets) }}
+</div>
+<br/><br/><br/><br/><br/>
+<script>
+/**
+     * Created by rodolvelasco on 19-11-14.
+     */
+    // Get the ul that holds the collection of tags
+    var collectionHolder = $('table.table-hover.table-bordered');
+
+    // setup an "add a tag" link
+    //var $addSaldoRowLink = $('<td colspan="7"><div align="right">Saldo</div></td><td colspan="2" class="timesheet"><div id="total_amount"></div></td>');
+    //var $addControlPagoLink = $('<td colspan="5"><div align="center"><a href="#" class="add_controlpago_link">Agregar Control Pago</a></div></td>');
+    //var $addTicketLink = $('<td colspan="5"><div align="center"><a href="#" class="add_ticket_link">Agregar ticket</a></div></td>');
+    var $addTicketLink = $('<td colspan="6"><div align="center"><a href="#" class="add_ticket_link"><button class="btn btn-default" ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> </span> Agregar ticket</button></a></div></td>');
+    var $newLinkLi  = $('<tr></tr>').append($addTicketLink);
+
+$(document).ready(function(){
+    //alert("1. Document Ready");
+
+    { //DATEPICKER
+        var pre = 'fecha';
+        var $inp = $('.' + pre);
+        
+        $inp.each(function (k, v) {
+            var $second = jQuery($inp.get(k)).datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    }
+
+    /*
+    $("table.table-hover.table-bordered").delegate("select[class=cambio_estado]", "change", function() {
+        $(this).find('select[]'));
+            LoadSeries($(this).val());
+    });*/
+    
+    //var conta = 0;
+    collectionHolder.find('tr').each(function(k) {
+        //if(k == 1 )alert("2. CollectionHolder");
+
+        //alert("TR => " + k);
+        if ( !($( this ).hasClass( "active" )) ) {
+            addTicketFormDeleteLink($(this));
+        }
+
+        $(this).find('select[class=cambio_estado]').on('change', function(){
+            if($(this).find(":selected").val() == "PREMIADO"){
+                //alert("PREMIADO"); /*+ $(this).closest('td').next('td').find('select[class=cambio_premio]').attr('id')*/
+                $(this).closest('td').next('td').find('select[class=cambio_premio]').val("RASPABLE_GRATIS");
+                //BUENO
+                //$(this).closest('td').next('td').find('select[class=cambio_premio]').on('change', function(event){
+                    //alert("funcionó");
+                    //alert("Funcionó => " + $(this).closest('td').next('td').find('select[class=cambio_premio]').val() );
+                    //BUENO
+                    //alert("Funcionó => " + event.target.id + " - "+ $(this).find(':selected').val() );
+                //BUENO
+                //});
+            }else{
+                //alert("NO SOY PREMIADO");
+                $(this).closest('td').next('td').find('select[class=cambio_premio]').val("");
+            }
+
+                
+        });
+    }); // Fin collectionHolder
+
+    //alert("2.1");
+    collectionHolder.append($newLinkLi);
+    //alert("2.2");
+    
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+
+    $addTicketLink.on('click', function(e) {
+        //alert("3. addTicketLink");
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTicketForm(collectionHolder, $newLinkLi);
+        
+        {//DATEPICKER
+            var pre = 'fecha';
+            var $inp = $('.' + pre);
+            
+            
+            $inp.each(function (k, v) {
+                var $second = jQuery($inp.get(k)).datepicker({
+                    dateFormat: 'yy-mm-dd'
+                });
+            });
+        }
+
+        {
+            collectionHolder.find('tr').each(function(k) {
+                $(this).find('select[class=cambio_estado]').on('change', function(){
+                    if($(this).find(":selected").val() == "PREMIADO"){
+                        $(this).closest('td').next('td').find('select[class=cambio_premio]').val("RASPABLE_GRATIS");
+                    }else{
+                        $(this).closest('td').next('td').find('select[class=cambio_premio]').val("");
+                    }
+                });
+            }); // Fin collectionHolder
+        }
+
+    });
+
+}); // Fin Document Ready
+
+function addTicketForm(collectionHolder, $newLinkLi) {
+    //alert("4. addTicketForm");
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    {% if libreta.caja.juego.id == 1 %}
+    var prototype_aux = '<td><div align="left"><input type="text" id="libreta_to_ticket_type_tickets___name___numeroTicket" name="libreta_to_ticket_type[tickets][__name__][numeroTicket]" required="required" maxlength="25" /></div></td>'
+                       +'<td><div align="left" id="fechaRecibido" class="fechaRec"><input type="text" id="libreta_to_ticket_type_tickets___name___fechaRecibido" name="libreta_to_ticket_type[tickets][__name__][fechaRecibido]" required="required" class="fecha" /></div></td>'
+                       +'<td><div align="left"><select id="libreta_to_ticket_type_tickets___name___estado" name="libreta_to_ticket_type[tickets][__name__][estado]" class="cambio_estado"><option value="EN_RUTA">En ruta</option><option value="EN_SALA_VENTAS">En sala de ventas</option><option value="VENDIDO">Vendido</option><option value="PREMIADO">Premiado</option></select></div></td>'
+                       +'<td><div align="left"><select id="libreta_to_ticket_type_tickets___name___premio" name="libreta_to_ticket_type[tickets][__name__][premio]" class="cambio_premio"><option value="">-- Sin premio --</option><option value="RASPABLE_GRATIS">Raspable gratis</option><option value="1">$1</option><option value="3">$3</option><option value="5">$5</option><option value="100">$100</option><option value="2500">$2500</option></select></div></td>';
+    {% endif %}
+    {% if libreta.caja.juego.id == 2 %}
+    var prototype_aux = '<td><div align="left"><input type="text" id="libreta_to_ticket_type_tickets___name___numeroTicket" name="libreta_to_ticket_type[tickets][__name__][numeroTicket]" required="required" maxlength="25" /></div></td>'
+                       +'<td><div align="left" id="fechaRecibido" class="fechaRec"><input type="text" id="libreta_to_ticket_type_tickets___name___fechaRecibido" name="libreta_to_ticket_type[tickets][__name__][fechaRecibido]" required="required" class="fecha" /></div></td>'
+                       +'<td><div align="left"><select id="libreta_to_ticket_type_tickets___name___estado" name="libreta_to_ticket_type[tickets][__name__][estado]" class="cambio_estado"><option value="EN_RUTA">En ruta</option><option value="EN_SALA_VENTAS">En sala de ventas</option><option value="VENDIDO">Vendido</option><option value="PREMIADO">Premiado</option></select></div></td>'
+                       +'<td><div align="left"><select id="libreta_to_ticket_type_tickets___name___premio" name="libreta_to_ticket_type[tickets][__name__][premio]" class="cambio_premio"><option value="">-- Sin premio --</option><option value="RASPABLE_GRATIS">Raspable gratis</option><option value="2">$2</option><option value="5">$5</option><option value="10">$10</option><option value="20">$20</option><option value="100">$100</option><option value="7000">$7000</option></select></div></td>';
+    {% endif %} 
+                        /*
+                        '<td><div align="left"><input type="text" id="libreta_to_ticket_type_tickets___name___numeroTicket" name="libreta_to_ticket_type[tickets][__name__][numeroTicket]" required="required" maxlength="25" /></div></td>'
+                       //+'<td><div align="left"><input type="text" id="libreta_to_ticket_type_tickets___name___numeroAleatorio" name="libreta_to_ticket_type[tickets][__name__][numeroAleatorio]" maxlength="1" /></div></td>'
+                       +'<td><div align="left" id="fechaRecibido" class="fechaRec"><input type="text" id="libreta_to_ticket_type_tickets___name___fechaRecibido" name="libreta_to_ticket_type[tickets][__name__][fechaRecibido]" required="required" class="fecha" /></div></td>'
+                       +'<td><div align="left"><input type="text" id="libreta_to_ticket_type_tickets___name___premio" name="libreta_to_ticket_type[tickets][__name__][premio]" /></div></td>'
+                       +'<td><div align="left"><select id="libreta_to_ticket_type_tickets___name___estado" name="libreta_to_ticket_type[tickets][__name__][estado]"><option value="EN_RUTA">En ruta</option><option value="EN_SALA_VENTAS">En sala de ventas</option><option value="VENDIDO">Vendido</option><option value="PREMIADO">Premiado</option></select></div></td>';
+                        */
+                        /*
+                        '<td><div align="left"><input type="date" id="controlPagoUnidadToCc_controlPagos___name___fecha" name="controlPagoUnidadToCc[controlPagos][__name__][fecha]" required="required" style="width: 125px;" class="fecha" /></div></td>'
+                        +'<td><div align="left"><input type="text" id="controlPagoUnidadToCc_controlPagos___name___numeroActaRecepcion" name="controlPagoUnidadToCc[controlPagos][__name__][numeroActaRecepcion]" style="width: 100px;" maxlength="12" required="required" /></div></td>'
+                        +'<td><div align="left"><input type="text" id="controlPagoUnidadToCc_controlPagos___name___numeroFactura" name="controlPagoUnidadToCc[controlPagos][__name__][numeroFactura]" style="width: 130px;" maxlength="15" required="required" /></div></td>'
+                        +'<td><div align="left"><input type="date" id="controlPagoUnidadToCc_controlPagos___name___fechaQuedan" name="controlPagoUnidadToCc[controlPagos][__name__][fechaQuedan]" required="required" style="width: 125px;" class="fechQuedan" /></div></td>'
+                        +'<td><div align="left" id="fechaVencimiento" class="fechaQueVen"></div></td>'
+                        +'<td><div align="left"><input type="text" id="controlPagoUnidadToCc_controlPagos___name___numeroQuedan" name="controlPagoUnidadToCc[controlPagos][__name__][numeroQuedan]" style="width: 100px;" maxlength="12" required="required" /></div></td>'
+                        +'<td><div align="left"><input type="text" id="controlPagoUnidadToCc_controlPagos___name___valorFactura" name="controlPagoUnidadToCc[controlPagos][__name__][valorFactura]" class="timesheet2" style="width: 100px;" maxlength="12" required="required" /></div></td>'
+                        +'<td class="saldo_parcial"><div id="amount_parcial"></div></td>';
+                        */    
+    //alert(prototype);
+    //alert(prototype_aux);
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    //alert(index);
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    //var newForm = prototype.replace(/__name__/g, index);
+    var newFormAux = prototype_aux.replace(/__name__/g, index);
+    
+    
+    
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    //alert(newForm);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    //var $newFormLi = $('<tr></tr>').append(newForm);
+    var $newFormLi = $('<tr></tr>').append(newFormAux);
+    
+    $newLinkLi.before($newFormLi);
+
+    // add a delete link to the new form
+    addTicketFormDeleteLink($newFormLi);
+}
+function addTicketFormDeleteLink($tagFormLi){
+
+    var $removeFormA = $('<td><a href="#"><button class="btn btn-default btn-xs" ><span class="glyphicon glyphicon-trash" aria-hidden="true"> </span> Borrar ticket</button></a></td>');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+        
+        var c = confirm("Desea borrar el ticket seleccionado?");
+        
+        if(c){
+            // remove the li for the tag form
+            $tagFormLi.remove();
+        }
+    });
+} // Fin addTicketFormDeleteLinkInit
+</script>
+{{ form_end(formulario) }}
+{% endblock %}

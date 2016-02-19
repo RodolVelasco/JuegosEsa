@@ -1,0 +1,3 @@
+pd_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PDBundle:Default:index }

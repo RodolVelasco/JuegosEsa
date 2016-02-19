@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Modificar libreta</h1>
+{{ form_start (formulario) }}
+	{{ form_errors(formulario) }}
+	{# {{ form_widget(formulario) }} #}
+
+	<div>
+		 
+        {#
+        {{ form_label(formulario.caja) }}
+        {{ form_errors(formulario.caja) }}
+        {{ form_widget(formulario.caja) }} 
+        #}
+        <label>Caja</label>
+        <input type="text" value="{{ formulario.vars.value.getCaja() }}" readonly="readonly"/>
+        
+    </div>
+
+	<div>
+        {{ form_label(formulario.correlativo) }}
+        {{ form_errors(formulario.correlativo) }}
+        {{ form_widget(formulario.correlativo) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.vendedor) }}
+        {{ form_errors(formulario.vendedor) }}
+        {{ form_widget(formulario.vendedor) }}
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+            //alert("HOLA");
+            $('#libreta_type_vendedor').on('change', function() {
+              //alert( this.value + ' ');
+            var str = $('#libreta_type_vendedor').find(":selected").text();
+              if (str.indexOf("Independiente") >= 0){
+                $('#libreta_type_precio_al_vendedor').val("5");
+              }else{
+                $('#libreta_type_precio_al_vendedor').val("0");
+              }
+            });
+        });
+    </script>
+
+    <div>
+        {{ form_label(formulario.precio_al_vendedor) }}
+        {{ form_errors(formulario.precio_al_vendedor) }}
+        {{ form_widget(formulario.precio_al_vendedor, {'value': formulario.precio_al_vendedor.vars.value|replace({',': '.'})}) }}
+        {# <input type="text" name="{{ formulario.precio_al_vendedor.vars.id }}" value="{{ formulario.precio_al_vendedor.vars.value|number_format(2, '.', ' ') }}"/> #}
+    </div>
+
+    <div>
+        {{ form_label(formulario.precio_acumulado) }}
+        {{ form_errors(formulario.precio_acumulado) }}
+        {{ form_widget(formulario.precio_acumulado, {'value': formulario.precio_acumulado.vars.value|replace({',': '.'})}) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.premio_acumulado) }}
+        {{ form_errors(formulario.premio_acumulado) }}
+        {{ form_widget(formulario.premio_acumulado, {'value': formulario.premio_acumulado.vars.value|replace({',': '.'})}) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.raspable_gratis_acumulado) }}
+        {{ form_errors(formulario.raspable_gratis_acumulado) }}
+        {{ form_widget(formulario.raspable_gratis_acumulado, {'value': formulario.raspable_gratis_acumulado.vars.value|replace({',': '.'})}) }}
+    </div>
+
+    <div>
+        {# <input type="hidden" id="is_vendedor_changed" name="is_vendedor_changed" value="{{ formulario.vars.value.getVendedor().getId() }}"> #}
+        {{ form_label(formulario.is_vendedor_changed) }}
+        {{ form_errors(formulario.is_vendedor_changed) }}
+        {# {{ formulario.vars.value.getVendedor() }} #}
+        
+        {% if formulario.vars.value.getVendedor() == "" %}
+            {{ form_widget( formulario.is_vendedor_changed, {'value': "" } ) }}
+        {% else %}
+            {{ form_widget( formulario.is_vendedor_changed, {'value': formulario.vars.value.getVendedor().getId() } ) }}
+        {% endif %}
+        
+    </div>
+    {# <script>$(document).ready(function(){ alert($('#libreta_type_is_vendedor_changed').val());});</script> #}
+{{ form_end(formulario) }}
+{% endblock %}

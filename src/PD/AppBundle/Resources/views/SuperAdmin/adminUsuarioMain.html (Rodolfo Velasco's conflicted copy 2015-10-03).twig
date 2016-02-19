@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Usuarios</h1>
+<a href="{{ path('admin_add_usuario', {'source': rolPaginaFuente}) }}">
+	<button class="btn btn-default">
+		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true">
+		</span>
+		Agregar Usuario
+	</button>
+</a><div class="spacer-25"></div>
+{{ grid(grid, 'APYDataGridBundle::blocks_adminUsuarioMain.html.twig') }}
+{% endblock %}

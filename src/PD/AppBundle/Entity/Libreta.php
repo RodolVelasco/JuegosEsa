@@ -1,0 +1,353 @@
+<?php
+
+namespace PD\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
+/**
+ * Libreta
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="PD\AppBundle\Entity\LibretaRepository")
+ */
+class Libreta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /** 
+      * @ORM\ManyToOne(targetEntity="PD\AppBundle\Entity\Caja", inversedBy="libretas") 
+      * @ORM\JoinColumn(name="caja_id", referencedColumnName="id", nullable=false)
+      * @Assert\Type(type="PD\AppBundle\Entity\Caja")
+      * @GRID\Column(field="caja.juego.nombre", title="Juego")
+      * @GRID\Column(field="caja.numero_carton", title="Caja")
+     */
+    protected $caja;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correlativo", type="string", length=10)
+     * @GRID\Column(title="Correlativo")
+     */
+    private $correlativo;
+	
+	/** 
+      * @ORM\ManyToOne(targetEntity="PD\AppBundle\Entity\Usuario", inversedBy="vendedores") 
+      * @ORM\JoinColumn(name="vendedor_id", referencedColumnName="id", nullable=true)
+      * @Assert\Type(type="PD\AppBundle\Entity\Usuario")
+      * @GRID\Column(field="vendedor.nombre", title="Nombre vendedor")
+      * @GRID\Column(field="vendedor.apellidos", title="Apellidos vendedor")
+     */
+	protected $vendedor;
+	
+	/** @ORM\Column(name="precio_al_vendedor", type="decimal", scale=2) */
+    protected $precio_al_vendedor;
+	
+	/** @ORM\Column(name="precio_acumulado", type="decimal", scale=2) 
+      * @GRID\Column(title="Precio acumulado")
+    */
+    protected $precio_acumulado;
+	
+    /** @ORM\Column(name="premio_acumulado", type="decimal", scale=2) 
+      * @GRID\Column(title="Premio acumulado")
+    */
+    protected $premio_acumulado;
+
+    /** @ORM\Column(name="raspable_gratis_acumulado", type="decimal", scale=2) 
+      * @GRID\Column(title="Raspable gratis acumulado")
+    */
+    protected $raspable_gratis_acumulado;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true) 
+	 */
+	protected $fecha_asignacion_vendedor;
+	
+	/**
+	 * @ORM\Column(type="datetime", nullable=true) 
+	 */
+	protected $fecha_estado_final;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PD\AppBundle\Entity\Ticket", mappedBy="libreta", cascade={"persist"})
+     */
+    protected $tickets;
+	
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set correlativo
+     *
+     * @param string $correlativo
+     * @return Libreta
+     */
+    public function setCorrelativo($correlativo)
+    {
+        $this->correlativo = $correlativo;
+
+        return $this;
+    }
+
+    /**
+     * Get correlativo
+     *
+     * @return string 
+     */
+    public function getCorrelativo()
+    {
+        return $this->correlativo;
+    }
+
+    /**
+     * Set precio_al_vendedor
+     *
+     * @param string $precioAlVendedor
+     * @return Libreta
+     */
+    public function setPrecioAlVendedor($precioAlVendedor)
+    {
+        $this->precio_al_vendedor = $precioAlVendedor;
+
+        return $this;
+    }
+
+    /**
+     * Get precio_al_vendedor
+     *
+     * @return string 
+     */
+    public function getPrecioAlVendedor()
+    {
+        return $this->precio_al_vendedor;
+    }
+
+    /**
+     * Set precio_acumulado
+     *
+     * @param string $precioAcumulado
+     * @return Libreta
+     */
+    public function setPrecioAcumulado($precioAcumulado)
+    {
+        $this->precio_acumulado = $precioAcumulado;
+
+        return $this;
+    }
+
+    /**
+     * Get precio_acumulado
+     *
+     * @return string 
+     */
+    public function getPrecioAcumulado()
+    {
+        return $this->precio_acumulado;
+    }
+
+    /**
+     * Set fecha_asignacion_vendedor
+     *
+     * @param \DateTime $fechaAsignacionVendedor
+     * @return Libreta
+     */
+    public function setFechaAsignacionVendedor($fechaAsignacionVendedor)
+    {
+        $this->fecha_asignacion_vendedor = $fechaAsignacionVendedor;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha_asignacion_vendedor
+     *
+     * @return \DateTime 
+     */
+    public function getFechaAsignacionVendedor()
+    {
+        return $this->fecha_asignacion_vendedor;
+    }
+
+    /**
+     * Set fecha_estado_final
+     *
+     * @param \DateTime $fechaEstadoFinal
+     * @return Libreta
+     */
+    public function setFechaEstadoFinal($fechaEstadoFinal)
+    {
+        $this->fecha_estado_final = $fechaEstadoFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha_estado_final
+     *
+     * @return \DateTime 
+     */
+    public function getFechaEstadoFinal()
+    {
+        return $this->fecha_estado_final;
+    }
+
+    /**
+     * Set vendedor
+     *
+     * @param \PD\AppBundle\Entity\Usuario $vendedor
+     * @return Libreta
+     */
+    public function setVendedor(\PD\AppBundle\Entity\Usuario $vendedor = null)
+    {
+        $this->vendedor = $vendedor;
+
+        return $this;
+    }
+
+    /**
+     * Get vendedor
+     *
+     * @return \PD\AppBundle\Entity\Usuario 
+     */
+    public function getVendedor()
+    {
+        return $this->vendedor;
+    }
+
+    /**
+     * Set caja
+     *
+     * @param \PD\AppBundle\Entity\Caja $caja
+     * @return Libreta
+     */
+    public function setCaja(\PD\AppBundle\Entity\Caja $caja = null)
+    {
+        $this->caja = $caja;
+
+        return $this;
+    }
+
+    /**
+     * Get caja
+     *
+     * @return \PD\AppBundle\Entity\Caja 
+     */
+    public function getCaja()
+    {
+        return $this->caja;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->caja = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tickets
+     *
+     * @param \PD\AppBundle\Entity\Ticket $tickets
+     * @return Libreta
+     */
+    public function addTicket(\PD\AppBundle\Entity\Ticket $tickets)
+    {
+        //$this->tickets[] = $tickets;
+
+        $tickets->setLibreta($this);
+        
+        $this->tickets->add($tickets);
+
+        return $this;
+    }
+
+    /**
+     * Remove tickets
+     *
+     * @param \PD\AppBundle\Entity\Ticket $tickets
+     */
+    public function removeTicket(\PD\AppBundle\Entity\Ticket $tickets)
+    {
+        $this->tickets->removeElement($tickets);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
+    public function __toString()
+    {
+        return $this->correlativo;
+    }
+
+    /**
+     * Set premio_acumulado
+     *
+     * @param string $premioAcumulado
+     * @return Libreta
+     */
+    public function setPremioAcumulado($premioAcumulado)
+    {
+        $this->premio_acumulado = $premioAcumulado;
+
+        return $this;
+    }
+
+    /**
+     * Get premio_acumulado
+     *
+     * @return string 
+     */
+    public function getPremioAcumulado()
+    {
+        return $this->premio_acumulado;
+    }
+
+    /**
+     * Set raspable_gratis_acumulado
+     *
+     * @param string $raspableGratisAcumulado
+     * @return Libreta
+     */
+    public function setRaspableGratisAcumulado($raspableGratisAcumulado)
+    {
+        $this->raspable_gratis_acumulado = $raspableGratisAcumulado;
+
+        return $this;
+    }
+
+    /**
+     * Get raspable_gratis_acumulado
+     *
+     * @return string 
+     */
+    public function getRaspableGratisAcumulado()
+    {
+        return $this->raspable_gratis_acumulado;
+    }
+}

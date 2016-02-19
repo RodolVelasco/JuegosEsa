@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h1 class="page-header">Supervisor</h1>
+<strong>Empleado:</strong> {{ supervisor }}<diV class="spacer-10"></div>
+{# <h3 class="page-header">Vendedores asignados</h3> #}
+{{ form_start(formulario) }}
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading" data-toggle="collapse" {# data-parent="#accordion" #} href="#vendedores_asignados">
+	    	<h4 class="panel-title">
+	        	Vendedores asignados
+	      	</h4>
+	    </div>
+	    <div id="vendedores_asignados" class="panel-collapse collapse in">
+	    	<div class="panel-body">
+	    		<div class="row">
+		    		{% for supervisados in formulario.asignados %}
+		    			<div class="col-md-4">
+			    			{{ form_widget(supervisados, {'checked': true }) }}
+			    			{{ form_label(supervisados) }}
+							{{ form_errors(supervisados) }}
+						</div>
+		    		{% endfor %}
+		    	</div>
+	      	</div>
+	    </div>
+	</div>
+</div>
+{# <h3 class="page-header">Vendedores</h3> #}
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading" data-toggle="collapse" {# data-parent="#accordion" #} href="#vendedores_sin_asignar">
+	    	<h4 class="panel-title">
+	        	Vendedores sin supervisor
+	      	</h4>
+	    </div>
+	    <div id="vendedores_sin_asignar" class="panel-collapse collapse in">
+	    	<div class="panel-body">
+	    		<div class="row">
+	    			{% for sinSupervisar in formulario.no_asignados %}
+						<div class="col-md-4">
+							{{ form_widget(sinSupervisar) }}
+			    			{{ form_label(sinSupervisar) }}
+							{{ form_errors(sinSupervisar) }}
+						</div>
+					{% endfor %}
+				</div>
+	      	</div>
+	    </div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">{{ form_widget(formulario.guardar)}}&nbsp;&nbsp;&nbsp;{{ form_widget(formulario.no_guardar)}}</div>
+	<div class="col-md-4"></div>
+</div>
+{{ form_end(formulario) }}
+{% endblock %}

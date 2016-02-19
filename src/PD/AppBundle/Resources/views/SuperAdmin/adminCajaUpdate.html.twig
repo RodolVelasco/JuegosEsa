@@ -1,0 +1,103 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Modificar caja</h1>
+{{ form_start (formulario) }}
+	{{ form_errors(formulario) }}
+	{# {{ form_widget(formulario) }} #}
+
+	<div>
+        {{ form_label(formulario.numero_carton) }}
+        {{ form_errors(formulario.numero_carton) }}
+        {{ form_widget(formulario.numero_carton) }}
+        
+    </div>
+
+	<div>
+        {{ form_label(formulario.contiene_libreta_limite_inferior) }}
+        {{ form_errors(formulario.contiene_libreta_limite_inferior) }}
+        {{ form_widget(formulario.contiene_libreta_limite_inferior) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.contiene_libreta_limite_superior) }}
+        {{ form_errors(formulario.contiene_libreta_limite_superior) }}
+        {{ form_widget(formulario.contiene_libreta_limite_superior) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.omite_libreta) }}
+        {{ form_errors(formulario.omite_libreta) }}
+        {{ form_widget(formulario.omite_libreta) }}
+        {# <input type="text" name="{{ formulario.precio_al_vendedor.vars.id }}" value="{{ formulario.precio_al_vendedor.vars.value|number_format(2, '.', ' ') }}"/> #}
+    </div>
+
+    <div>
+        {{ form_label(formulario.total_libretas) }}
+        {{ form_errors(formulario.total_libretas) }}
+        {{ form_widget(formulario.total_libretas) }}
+    </div>
+
+    <div>
+        {{ form_label(formulario.libretas_asignadas) }}
+        {{ form_errors(formulario.libretas_asignadas) }}
+        {{ form_widget(formulario.libretas_asignadas) }}
+    </div>
+
+    <div>
+        {#
+        {{ form_label(formulario.juego) }}
+        {{ form_errors(formulario.juego) }} 
+        #}
+        
+        {#
+        {% set label = '' %}
+        {% for choice in formulario.juego.vars.choices %}
+            {% if choice.value == formulario.juego.vars.value %}
+                {% set label = choice.label %}
+            {% endif %}
+        {% endfor %}
+        <input type="text" value="{{ label }}" readonly="readonly"/> #}
+        <label>Juego</label>
+        <input type="text" value="{{ formulario.vars.value.getJuego() }}" readonly="readonly"/>
+        {# {% do formulario.juego.setRendered %} #}
+    </div>
+
+    <div>
+        {% if modificar_asigna_usuario == 1 %}
+            {{ form_label(formulario.usuario) }}
+            {{ form_errors(formulario.usuario) }}
+            {{ form_widget(formulario.usuario) }}
+        {% else %}
+            <label>Se asigna a</label>
+            <input type="text" value="{{ formulario.vars.value.getUsuario() }}" readonly="readonly" size="40"/>
+        {% endif %}
+    </div>
+
+    <div>
+        
+        {{ form_label(formulario.fecha_creacion) }}
+        {{ form_errors(formulario.fecha_creacion) }}
+        {{ form_widget(formulario.fecha_creacion, {'value': formulario.fecha_creacion.vars.value|date('Y-m-d') }) }}
+        {# {{ formulario.fecha_creacion }} #}
+    </div>
+
+    <div>
+        {{ form_label(formulario.estado) }}
+        {{ form_errors(formulario.estado) }}
+        {{ form_widget(formulario.estado) }}
+    </div>
+
+    <div>
+        {{ form_widget(formulario.regresar) }}
+        {{ form_widget(formulario.guardar) }}
+        {{ form_widget(formulario.deshabilitar_caja) }}
+        {{ form_widget(formulario._token) }}
+    </div>
+{{ form_end(formulario, {'render_rest': false}) }}
+{% endblock %}

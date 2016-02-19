@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+	<script src="{{ asset('javascript/jquery.price_format.2.0.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Modificar juego</h1>
+{{ form_start(formulario) }}
+	{{ form_row(formulario.nombre) }}
+	{{ form_row(formulario.numero_tickets, {'read_only': true}) }}
+	{{ form_row(formulario.precio_x_ticket, {'read_only': true}) }}
+	{{ form_row(formulario.estado) }}
+{{ form_end(formulario) }}
+<script>
+$(document).ready(function(){
+	 //alert('hola');
+	 //$('#precio_x_ticket').priceFormat();
+	 $('#juegotype_precio_x_ticket').priceFormat({prefix: '',clearPrefix: true});
+	 //$('#juegotype_precio_x_ticket').val('12');
+});
+</script>
+{% endblock %}

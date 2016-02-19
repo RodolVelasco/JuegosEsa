@@ -1,0 +1,405 @@
+<?php
+
+namespace PD\AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
+/**
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="caja") 
+ * 
+ */
+class Caja
+{
+	/**
+	 * 
+	 * @ORM\Id 
+	 * @ORM\Column(type="integer") 
+	 * @ORM\GeneratedValue
+	 */
+	protected $id;
+	
+	/** 
+     * @ORM\Column(type="string", length=100)
+     * @GRID\Column(title="Número carton")
+    */
+	protected $numero_carton;
+	
+	/** @ORM\Column(type="string", length=100) */
+	protected $contiene_libreta_limite_inferior;
+	
+	/** @ORM\Column(type="string", length=100) */
+	protected $contiene_libreta_limite_superior;
+	
+	/** 
+     * @ORM\Column(type="string", length=50)
+     * @GRID\Column(title="Libretas omitidas")
+    */
+	protected $omite_libreta;
+	
+	/** 
+     * @ORM\Column(type="integer", length=11) 
+     * @GRID\Column(title="Total libretas")
+     */
+	protected $total_libretas;
+	
+    /** 
+     * @ORM\Column(type="integer", length=11) 
+     * @GRID\Column(title="Libretas asignadas")
+     */
+    protected $libretas_asignadas;
+
+	/** @ORM\ManyToOne(targetEntity="PD\AppBundle\Entity\Juego") 
+	 *  @ORM\JoinColumn(name="juego_id", referencedColumnName="id")
+     * @Assert\Type(type="PD\AppBundle\Entity\Juego")
+     * @GRID\Column(field="juego.nombre", title="Juego")
+	 */
+	protected $juego;
+
+    /** @ORM\ManyToOne(targetEntity="PD\AppBundle\Entity\Sucursal") 
+     *  @ORM\JoinColumn(name="sucursal_id", referencedColumnName="id")
+     * @Assert\Type(type="PD\AppBundle\Entity\Sucursal")
+     * @GRID\Column(field="sucursal.nombre", title="Sucursal")
+     */
+    protected $sucursal;
+	
+	/** @ORM\ManyToOne(targetEntity="PD\AppBundle\Entity\Usuario") **/
+	protected $usuario;
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+     * @GRID\Column(title="Fecha creación")
+	 */
+	protected $fecha_creacion;
+	
+	/**
+     * @var boolean
+     *
+     * @ORM\Column(name="estado", type="string", length=50)
+     * @GRID\Column(title="Estado")
+     */
+    protected $estado;
+	/* 
+	 * 1 = CREADO
+	 * 2 = ASIGNADO_A_SUPERVISOR
+	 * 3 = FINALIZADO_CON_EXITO
+	 * 4 = FINALIZADO_CON_OBSERVACIONES
+     * 5 = DESHABILITADO
+	 * 
+	 */
+
+    /**
+     * @ORM\OneToMany(targetEntity="PD\AppBundle\Entity\Libreta", mappedBy="caja", cascade={"remove", "persist"})
+     */
+    protected $libretas;
+	
+	
+	public function __construct()
+	{
+		$this->fecha_creacion = new \DateTime();
+        $this->libretas = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set numero_carton
+     *
+     * @param string $numeroCarton
+     * @return Caja
+     */
+    public function setNumeroCarton($numeroCarton)
+    {
+        $this->numero_carton = $numeroCarton;
+
+        return $this;
+    }
+
+    /**
+     * Get numero_carton
+     *
+     * @return string 
+     */
+    public function getNumeroCarton()
+    {
+        return $this->numero_carton;
+    }
+
+    /**
+     * Set contiene_libreta_limite_inferior
+     *
+     * @param string $contieneLibretaLimiteInferior
+     * @return Caja
+     */
+    public function setContieneLibretaLimiteInferior($contieneLibretaLimiteInferior)
+    {
+        $this->contiene_libreta_limite_inferior = $contieneLibretaLimiteInferior;
+
+        return $this;
+    }
+
+    /**
+     * Get contiene_libreta_limite_inferior
+     *
+     * @return string 
+     */
+    public function getContieneLibretaLimiteInferior()
+    {
+        return $this->contiene_libreta_limite_inferior;
+    }
+
+    /**
+     * Set contiene_libreta_limite_superior
+     *
+     * @param string $contieneLibretaLimiteSuperior
+     * @return Caja
+     */
+    public function setContieneLibretaLimiteSuperior($contieneLibretaLimiteSuperior)
+    {
+        $this->contiene_libreta_limite_superior = $contieneLibretaLimiteSuperior;
+
+        return $this;
+    }
+
+    /**
+     * Get contiene_libreta_limite_superior
+     *
+     * @return string 
+     */
+    public function getContieneLibretaLimiteSuperior()
+    {
+        return $this->contiene_libreta_limite_superior;
+    }
+
+    /**
+     * Set omite_libreta
+     *
+     * @param string $omiteLibreta
+     * @return Caja
+     */
+    public function setOmiteLibreta($omiteLibreta)
+    {
+        $this->omite_libreta = $omiteLibreta;
+
+        return $this;
+    }
+
+    /**
+     * Get omite_libreta
+     *
+     * @return string 
+     */
+    public function getOmiteLibreta()
+    {
+        return $this->omite_libreta;
+    }
+
+    /**
+     * Set total_libretas
+     *
+     * @param string $totalLibretas
+     * @return Caja
+     */
+    public function setTotalLibretas($totalLibretas)
+    {
+        $this->total_libretas = $totalLibretas;
+
+        return $this;
+    }
+
+    /**
+     * Get total_libretas
+     *
+     * @return string 
+     */
+    public function getTotalLibretas()
+    {
+        return $this->total_libretas;
+    }
+
+    /**
+     * Set juego
+     *
+     * @param \PD\AppBundle\Entity\Juego $juego
+     * @return Caja
+     */
+    public function setJuego(\PD\AppBundle\Entity\Juego $juego)
+    {
+        $this->juego = $juego;
+    }
+
+    /**
+     * Get juego
+     *
+     * @return \PD\AppBundle\Entity\Juego 
+     */
+    public function getJuego()
+    {
+        return $this->juego;
+    }
+	
+	public function __toString()
+	{
+		return $this->getNumeroCarton();
+	}
+
+    /**
+     * Set sucursal
+     *
+     * @param \PD\AppBundle\Entity\Sucursal $sucursal
+     * @return Caja
+     */
+    public function setSucursal(\PD\AppBundle\Entity\Sucursal $sucursal)
+    {
+        $this->sucursal = $sucursal;
+    }
+
+    /**
+     * Get sucursal
+     *
+     * @return \PD\AppBundle\Entity\Sucursal
+     */
+    public function getSucursal()
+    {
+        return $this->sucursal;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \PD\AppBundle\Entity\Usuario $usuario
+     * @return Caja
+     */
+    public function setUsuario(\PD\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \PD\AppBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set fecha_creacion
+     *
+     * @param \DateTime $fechaCreacion
+     * @return Caja
+     */
+    public function setFechaCreacion($fechaCreacion)
+    {
+        $this->fecha_creacion = $fechaCreacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha_creacion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaCreacion()
+    {
+        return $this->fecha_creacion;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Caja
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Add libretas
+     *
+     * @param \PD\AppBundle\Entity\Libreta $libretas
+     * @return Caja
+     */
+    public function addLibreta(\PD\AppBundle\Entity\Libreta $libretas)
+    {
+        //$this->libretas[] = $libretas;
+        //return $this;
+
+        $libretas->setCaja($this);
+        $this->libretas->add($libretas);
+        return $this;
+    }
+
+    /**
+     * Remove libretas
+     *
+     * @param \PD\AppBundle\Entity\Libreta $libretas
+     */
+    public function removeLibreta(\PD\AppBundle\Entity\Libreta $libretas)
+    {
+        $this->libretas->removeElement($libretas);
+    }
+
+    /**
+     * Get libretas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLibretas()
+    {
+        return $this->libretas;
+    }
+
+    /**
+     * Set libretas_asignadas
+     *
+     * @param string $libretasAsignadas
+     * @return Caja
+     */
+    public function setLibretasAsignadas($libretasAsignadas)
+    {
+        $this->libretas_asignadas = $libretasAsignadas;
+
+        return $this;
+    }
+
+    /**
+     * Get libretas_asignadas
+     *
+     * @return string 
+     */
+    public function getLibretasAsignadas()
+    {
+        return $this->libretas_asignadas;
+    }
+}

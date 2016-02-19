@@ -1,0 +1,58 @@
+security:
+
+    encoders:
+        #Symfony\Component\Security\Core\User\User: plaintext
+        PD\AppBundle\Entity\Usuario:        { algorithm: sha512, iterations: 10 }
+        #Symfony\Component\Security\Core\User\User: sha512
+
+    providers:
+        #my_in_memory_provider:
+        #    memory:
+        #        users:
+        #            foo:
+        #                password:           foo
+        #                roles:              ROLE_USUARIO
+        #            bar:
+        #                password:           bar
+        #                roles:              [ROLE_USUARIO, ROLE_ADMINISTRADOR]
+        usuarios:
+            entity: { class: PD\AppBundle\Entity\Usuario, property: username }
+        # Usuarios del backend
+        #administradores:
+        #    memory:
+        #        users:
+                    # user = admin, pass = 1234
+        #            admin: { password: Eti36Ru/pWG6WfoIPiDFUBxUuyvgMA4L8+LLuGbGyqV9ATuT9brCWPchBqX5vFTF+DgntacecW+sSGD+GZts2A==, roles: ROLE_ADMINISTRADOR }
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USUARIO
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    firewalls:
+        frontend:
+            pattern:    ^/*
+            anonymous:  ~
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
+                default_target_path:            /main
+                always_use_default_target_path: true
+                use_referer:  true
+            logout:
+                path:   login_logout
+                target: /login
+            anonymous:  true
+            remember_me:
+                key:       juegos1234
+                lifetime:  3600
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+
+        default:
+            anonymous: ~
+    
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sitio/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/*, roles: [ROLE_USUARIO, ROLE_ADMINISTRADOR] }

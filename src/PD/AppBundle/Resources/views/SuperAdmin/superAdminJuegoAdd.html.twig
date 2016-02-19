@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+	<script src="{{ asset('javascript/jquery.price_format.2.0.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Agregar juego</h1>
+<div class="col-md-12">
+	{{ form_start (formulario, {'attr': {'class': 'form-horizontal col-md-8'}}) }}
+		<div class="form-group">
+			{{ form_label(formulario.nombre, 'Nombre', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.nombre, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.numero_tickets, 'Número de tickets', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.numero_tickets, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.precio_x_ticket, 'Precio por ticket', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.precio_x_ticket, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		
+		<div class="form-group">
+			{{ form_label(formulario.estado, 'Estado', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.estado, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		
+		<div class="form-group">
+      		<div class="col-sm-offset-6 col-sm-6">
+				{{ form_row(formulario.registrar_juego, { 'label': 'Registrar juego', 'attr': {'class': 'btn btn-primary' }}) }}
+			</div>
+		</div>
+	{{ form_end(formulario) }}
+</div>
+<script>
+$(document).ready(function(){
+	 //alert('hola');
+	 //$('#precio_x_ticket').priceFormat();
+	 $('#juegotype_precio_x_ticket').priceFormat({prefix: '',clearPrefix: true});
+	 //$('#juegotype_precio_x_ticket').val('12');
+});
+</script>
+{% endblock %}

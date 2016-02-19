@@ -1,0 +1,101 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Juegos El Salvador</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">foo <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ path('login_logout') }}">Cerrar sesión</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+	<p>
+	<div class="panel panel-default">
+		
+		<div class="panel-heading">
+			<h4>Panel Principal</h4>
+		</div>
+		
+		<div class="panel-body">
+		<table class="table table-hover table-striped">
+	    <thead>
+		        <tr>
+		            <th>No.</th>
+		            <th>Nombre</th>
+		            <th>Acción</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td>1</td>
+		            <td>
+		            	Opción A
+					</td>
+		            <td>
+		            	<a class="btn btn-default btn-xs" href="#">Abrir</a>
+		            </td>
+		        </tr>
+		        <tr>
+		            <td>2</td>
+		            <td>
+		            	Opción B
+		            </td>
+		            <td>
+		            	<a class="btn btn-default btn-xs" href="#">Abrir</a>
+					</td>
+		        </tr>
+		        <tr>
+		            <td>3</td>
+		            <td>
+		            	Opción C
+		            </td>
+		            <td>
+		            	<a class="btn btn-default btn-xs" href="#">Abrir</a>
+		            </td>
+		        </tr>
+		        <tr>
+		            <td>4</td>
+		            <td>
+						Opción D
+					</td>
+		            <td>
+						<a class="btn btn-default btn-xs" href="#">Abrir</a>
+					</td>
+		        </tr>
+		        <tr>
+		            <td>5</td>
+		            <td>
+						Opción E
+		            </td>
+		            <td>
+		            	<a class="btn btn-default btn-xs" href="#">Abrir</a>
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>
+		</div>
+	</div>
+	</p>
+</div>
+{% endblock %}

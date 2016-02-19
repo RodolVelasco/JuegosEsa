@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Juegos</h1>
+<a href="{{ path('super_admin_add_juego') }}">
+	<button class="btn btn-default" >
+		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> </span> Agregar Juego
+	</button>
+</a><div class="spacer-25"></div>
+{{ grid(grid, 'APYDataGridBundle::blocks_adminJuegoMain.html.twig') }}
+{% endblock %}

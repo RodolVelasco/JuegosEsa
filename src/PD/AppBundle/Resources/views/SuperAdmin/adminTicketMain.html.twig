@@ -1,0 +1,43 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+
+<h1 class="page-header">Tickets</h1>	
+
+<!-- {# 
+<table class="table table-hover table-bordered">
+<thead>
+        <tr>
+            <th colspan="5" class="text-center active">LIBRETAS</th>
+        </tr>
+        <tr>
+            <th class="active">Caja</th>
+            <th class="active">Correlativo</th>
+            <th class="active">Vendedor</th>
+            <th class="active">Fecha asignado a vendedor</th>
+            <th class="active">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for libreta in libretas %}
+        <tr>
+            <td>{{ libreta.caja.numeroCarton }}</td>
+            <td>{{ libreta.correlativo }}</td>
+            <td>{{ libreta.vendedor }}</td>
+            <td>{{ libreta.fechaAsignacionVendedor|date('Y-m-d') }}</td>
+            <td>
+            	<a class="btn btn-default btn-xs" href="{{ path('admin_update_ticket', { 'libretaId': libreta.id }) }}">Modificar</a>
+            </td>
+        </tr>
+       {% endfor %}
+    </tbody>
+</table>
+#} -->
+{{ grid(grid, 'APYDataGridBundle::blocks_adminTicketMain.html.twig') }}
+{# {{ grid(grid) }} #}
+{% endblock %}

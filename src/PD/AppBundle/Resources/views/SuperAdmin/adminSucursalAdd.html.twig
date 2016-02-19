@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+	<h1 class="page-header">Agregar sucursal</h1>
+	<div class="col-md-12">
+	{{ form_start (formulario, {'attr': {'class': 'form-horizontal col-md-8'}}) }}
+		<div class="form-group">
+			{{ form_label(formulario.nombre, 'Nombre', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.nombre, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.estado, 'Estado', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.estado, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.fecha_ingreso_sistema, 'Fecha creación', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.fecha_ingreso_sistema, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+      		<div class="col-sm-offset-6 col-sm-6">
+				{{ form_row(formulario.registrar_sucursal, { 'label': 'Registrar sucursal', 'attr': {'class': 'btn btn-primary' }}) }}
+			</div>
+		</div>
+	{{ form_end(formulario) }}
+	</div>
+{% endblock %}

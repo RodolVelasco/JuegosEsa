@@ -1,0 +1,106 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+	<!-- Custom styles for this template -->
+	<!-- <link href="{{ asset('bootstrap/css/navbar.css') }}" rel="stylesheet"> -->
+{% endblock %}
+
+{% block body %}
+<h1 class="page-header">Agregar usuario</h1>
+<div class="col-md-12">
+	{{ form_start (formulario, {'attr': {'class': 'form-horizontal col-md-8'}}) }}
+	{{ form_errors(formulario) }}
+	<fieldset>
+		<legend>Datos personales</legend>
+		<div class="form-group">
+			{{ form_label(formulario.nombre, 'Nombre', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.nombre, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.apellidos, 'Apellidos', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.apellidos, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.dui, 'Dui', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.dui, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.fecha_nacimiento, 'Fecha de nacimiento', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.fecha_nacimiento, {'type': 'text', 'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.direccion, 'Dirección', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.direccion, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+	</fieldset>
+		<legend>Datos de acceso</legend>
+		<div class="form-group">
+			{{ form_label(formulario.username, 'Nombre de usuario', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.username, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.password.first, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.password.first, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.password.second, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.password.second, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.email, 'Correo electrónico', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.email, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.tipo_usuario, 'Tipo usuario', {'label_attr': {'class': 'col-sm-3 control-label', 'separator': '' }}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.tipo_usuario, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(formulario.estado, 'Estado', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+			<div class="col-sm-9">
+				{{ form_widget(formulario.estado, {'attr': {'class': 'form-control'}}) }}
+			</div>
+		</div>
+	</fieldset>
+	<div class="form-group">
+  		<div class="col-sm-offset-6 col-sm-6">
+			{{ form_row(formulario.registrar_usuario, { 'label': 'Registrar usuario', 'attr': {'class': 'btn btn-primary' }}) }}
+		</div>
+	</div>
+	{{ form_end(formulario) }}
+</div>
+<script>
+$(document).ready(function(){
+    //alert("1");
+    $("#pd_appbundle_usuariotype_fecha_nacimiento").datepicker({
+    	minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+      	//dateFormat: 'dd/mm/yy',
+      	dateFormat: 'yy-mm-dd',
+      	defaultDate: new Date(1990,1-1,1),
+      	changeMonth: true,
+      	changeYear: true,
+      	yearRange: '-110:-18'
+    });
+    alert($("#pd_appbundle_usuariotype_fecha_nacimiento").val());
+});
+</script>
+{% endblock %}

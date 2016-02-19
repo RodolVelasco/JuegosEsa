@@ -1,0 +1,118 @@
+pd:
+    resource: "@PDBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: @PDBundle/Controller/
+    type:     annotation
+
+#pd_app:
+#    resource: "@PDAppBundle/Resources/config/routing.yml"
+#    prefix:   /
+
+#app:
+#    resource: @AppBundle/Controller/
+#    type:     annotation
+
+login:
+    pattern:  /login
+    defaults: { _controller: PDBundle:Default:loginSymfony }
+
+login_check:
+    pattern:  /login_check
+
+login_logout:
+    pattern:  /logout
+    defaults: { _controller: PDBundle:Default:logout }
+
+super_admin_main_usuario:
+    pattern:  /mainUsuario
+    defaults: { _controller: PDBundle:SuperAdmin:mainUsuario }
+
+super_admin_add_usuario:
+    pattern:  /addUsuario
+    defaults: { _controller: PDBundle:SuperAdmin:addUsuario }
+
+super_admin_add_supervisor_a_vendedor:
+    pattern:  /addSupervisorVendedor/{supervisorId}
+    defaults: { _controller: PDBundle:SuperAdmin:addSupervisorVendedor }
+
+super_admin_update_usuario:
+    pattern:  /updateUsuario/{usuarioId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateUsuario }
+
+super_admin_main_juego:
+    pattern:  /mainJuego
+    defaults: { _controller: PDBundle:SuperAdmin:mainJuego }
+
+super_admin_add_juego:
+    pattern:  /addJuego
+    defaults: { _controller: PDBundle:SuperAdmin:addJuego }
+
+super_admin_update_juego:
+    pattern:  /updateJuego/{juegoId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateJuego }
+
+super_admin_main_sucursal:
+    pattern:  /mainSucursal
+    defaults: { _controller: PDBundle:SuperAdmin:mainSucursal }
+
+super_admin_add_sucursal:
+    pattern:  /addSucursal
+    defaults: { _controller: PDBundle:SuperAdmin:addSucursal }
+
+super_admin_update_sucursal:
+    pattern:  /updateSucursal/{sucursalId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateSucursal }
+
+super_admin_main_caja:
+    pattern:  /mainCaja
+    defaults: { _controller: PDBundle:SuperAdmin:mainCaja }
+
+super_admin_add_caja:
+    pattern:  /addCaja
+    defaults: { _controller: PDBundle:SuperAdmin:addCaja }
+
+super_admin_update_caja:
+    pattern:  /updateCaja/{cajaId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateCaja }
+
+super_admin_main_libreta:
+    pattern:  /mainLibreta
+    defaults: { _controller: PDBundle:SuperAdmin:mainLibreta }
+
+super_admin_update_libreta:
+    pattern:  /updateLibreta/{libretaId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateLibreta }
+
+super_admin_main_ticket:
+    pattern:  /mainTicket
+    defaults: { _controller: PDBundle:SuperAdmin:mainTicket }
+
+super_admin_update_ticket:
+    pattern:  /updateTicket/{libretaId}
+    defaults: { _controller: PDBundle:SuperAdmin:updateTicket }
+
+reporte_canje_efectivo:
+    pattern: /reporteCanjeEfectivo
+    defaults: { _controller: PDBundle:report:canjeEfectivo }
+
+main_menu:
+    pattern:  /main_menu
+    defaults: { _controller: PDBundle:Default:mainMenu }
+
+main:
+    pattern:  /main
+    defaults: { _controller: PDBundle:Default:main }
+
+pagina_estatica:
+    pattern:    /sitio/{pagina}
+    defaults:   { _controller: PDBundle:Sitio:estatica }
+
+_pagina_estatica:
+    pattern:    /sitio/{pagina}/
+    defaults:   { _controller: FrameworkBundle:Redirect:redirect, route: pagina_estatica, permanent: true }
+
+ayuda:
+    pattern:  /ayuda
+    defaults: { _controller: PDBundle:Default:ayuda }

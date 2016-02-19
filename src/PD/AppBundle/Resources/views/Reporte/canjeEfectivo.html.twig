@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<h1 class="page-header">Reporte - Canje y efectivo</h1>
+{{ form_start(formulario) }}
+<div class="form-group">
+    {{ form_label(formulario.fecha_inicio) }}
+    {{ form_widget(formulario.fecha_inicio) }}
+    {{ form_errors(formulario.fecha_inicio) }}
+</div>
+<div class="form-group">
+    {{ form_label(formulario.fecha_fin) }}
+    {{ form_widget(formulario.fecha_fin) }}
+    {{ form_errors(formulario.fecha_fin) }}
+</div>
+{{ form_widget(formulario.generar) }}
+{{ form_end(formulario) }}
+<script>
+$(document).ready(function(){
+    //alert("1");
+    $("#form_fecha_inicio").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(selected) {
+            $("#form_fecha_fin").datepicker("option","minDate", selected)
+        }
+
+    });
+    $("#form_fecha_fin").datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(selected) {
+            $("#form_fecha_inicio").datepicker("option","maxDate", selected)
+        }
+    });
+
+
+    $('#form_generar').click(function(e) {
+        if( $("#form_fecha_inicio").val().length > 0 && $("#form_fecha_fin").val().length > 0 ){
+            $('form[name="form"]').submit();
+
+        }else if( ($("#form_fecha_inicio").val().length < 1) && ($("#form_fecha_fin").val().length < 1) ){
+            $('form[name="form"]').submit();
+        }else{
+            alert("Debe elegir ambas fechas o ninguna de ellas");
+        }
+    });
+});
+</script>
+{% endblock %}
